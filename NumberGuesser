@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+/**
+   This program finds a number 1 - 100.  
+*/
+
+public class NumberGuesser{
+   public static void main(String[] args) {
+      do {
+         playOneGame();
+      } while (shouldPlayAgain());
+   }
+   
+   /**
+      The getMidpoint() function takes two numbers, finds the span, divides that in half, and then adds the half of the span to the low point.
+      This function returns an int.
+   */
+
+   public static int getMidpoint(int low, int high){  
+      int golden_Egg = Math.round((((high - low) / 2) + low));
+      return (golden_Egg);      
+   }
+   
+   /**
+      The getUserResponseToGuess() function accepts an int arguement called guess which will be provided by the getMidpoint() function.
+      This function asks the user if the guess is their number by asking for three responses: h for higher, l for lower, and c for correct.
+      This function returns a char.
+   */
+   
+   public static char getUserResponseToGuess(int guess){
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Is it " + guess + "? (h/l/c)");
+      char user_Answer = scan.nextLine().charAt(0);
+      return (user_Answer);
+   }
+   
+   /**
+      The playOneGame() method sets the guessing range from new_Low to new_High which are 1 and 101 perspectively.  
+      The while loop attempts to guess the users number using new_Low and new_High to get the midpoint and then seek h/l/c input from the user.
+      The following "if" statements check the "char" returned to "attempt".
+      If the guess is "high" we assign new_Low to be the new low number in our range of guesses.
+      If the guess is "low" we assign new_High to be the new high number in our range of guesses.
+      If the guess is "c" we end the while loop by declaring truth to be false.
+      
+      The end of this method takes us to shouldPlayAgain() in the main method.
+   */
+   
+   public static void playOneGame(){
+      boolean truth = true;
+      int new_Low = 1;
+      int new_High = 101;
+      System.out.println("Guess a number between 1 and 100.");
+      while(truth == true){
+         char attempt = getUserResponseToGuess(getMidpoint(new_Low,new_High));
+         if (attempt == 'h'){
+            new_Low = getMidpoint(new_Low,new_High);
+         }
+         if (attempt == 'l'){
+            new_High = getMidpoint(new_Low,new_High);
+         }
+         if (attempt == 'c'){
+            truth = false;
+         }
+      } 
+   }
+   
+   /**
+      The shouldPlayAgain() function asks the user to return either 'y' or 'n'.
+      If the user input is 'y' we return a boolean value of true.
+      If the user input is 'n' we return a boolean value of false.
+   */
+   
+   public static boolean shouldPlayAgain(){
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Great! Do you want to play again? (y/n)");
+      char user_Answer = scan.nextLine().charAt(0);
+      if (user_Answer == 'y'){
+         return true;
+      }
+      else {
+         return false;
+      }
+   }
+}  
